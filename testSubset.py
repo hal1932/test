@@ -7,18 +7,21 @@ import fontTools.ttLib.tables as tttables
 # platformID
 WINDOWS = 3
 
-#ttf = ttlib.TTFont(os.path.join(os.path.dirname(__file__), 'mplus-1c-black.ttf'))
-ttf = ttlib.TTFont('R:\\TEMP\\meiryo.ttc', fontNumber=0)
+ttf = ttlib.TTFont(os.path.join(os.path.dirname(__file__), 'mplus-1c-black.ttf'))
+#ttf = ttlib.TTFont('R:\\TEMP\\meiryo.ttc', fontNumber=0)
 
-# codeDic = [ { (name, glyphID), ... } ]
+# codeDic = [ { (name, code), ... } ]
 codeDics = []
 tmp = filter(lambda t:t.platformID == WINDOWS, ttf['cmap'].tables)
 for t in tmp:
+    print t.platformID, t.platEncID
     codeDic = {}
-    for glyphID, name in t.cmap.items():
-        codeDic[name] = glyphID
-        #print name, glyphID
+    for code, name in t.cmap.items():
+        codeDic[name] = code
+        #print name, code
     codeDics.append(codeDic)
+
+sys.exit()
 
 baseStr = u'芗Windows広ります'
 baseChars = map(ord, baseStr)
